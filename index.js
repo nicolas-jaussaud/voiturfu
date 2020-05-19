@@ -1,25 +1,41 @@
-const d = document
+// Need to be out of scope
+var isLoading = true
 
-let scene = new THREE.Scene();
+window.onload = () => {
 
-let camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1400 )
-camera.position.z = 50
-camera.position.y = 25
-camera.rotation.x = 50
+  const d = document
 
-let renderer = new THREE.WebGLRenderer()
-renderer.setSize( window.innerWidth, window.innerHeight )
-d.body.appendChild( renderer.domElement )
+  // Loader until we download all the assets
+  const loadingContent = d.getElementById('loading')
 
-// @see utils/lights
-lights(scene)
-loadCar(scene)
+  let scene = new THREE.Scene();
 
-new World(scene)
+  let camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1400 )
+  camera.position.z = 50
+  camera.position.y = 25
+  camera.rotation.x = 50
 
-const animate = function () {
-	requestAnimationFrame( animate )
-	renderer.render( scene, camera )
-};
+  let renderer = new THREE.WebGLRenderer()
+  renderer.setSize( window.innerWidth, window.innerHeight )
+  d.body.appendChild( renderer.domElement )
 
-animate();
+  // @see utils/lights
+  lights(scene)
+  loadCar(scene)
+
+  new World(scene)
+
+  const animate = function () {
+    requestAnimationFrame( animate )
+    renderer.render( scene, camera )
+  };
+
+  animate();
+
+  // Remove when everything is loaded
+  const loading = () => isLoading === false ? 
+    loadingContent.setAttribute('style','display:none') : 
+    setTimeout(() => loading(), 200); 
+  
+  loading()
+}

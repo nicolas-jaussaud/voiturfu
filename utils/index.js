@@ -16,6 +16,7 @@ const loadCar = async (scene) => {
     objLoader.load('CyberpunkDeLorean.obj', (object) => {
       car = new Car(object)
       scene.add(object)
+      isLoading = false
     })
 
   })
