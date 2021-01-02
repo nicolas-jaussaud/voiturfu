@@ -193,7 +193,6 @@ class World {
     thunderLight.intensity = 0
     this.scene.add(thunderLight)
     
-
     let decline = false
     const interval = setInterval(() => {
         
@@ -202,13 +201,12 @@ class World {
         thunderLight.intensity - 50
       
       const color = thunderLight.intensity / 500
-      console.log(color)
       this.scene.background = new THREE.Color(
         'rgb(' + thunderLight.intensity + '%, ' + thunderLight.intensity + '%, ' + thunderLight.intensity + '%)'
       )
       
       if(thunderLight.intensity > 500) {
-          decline = true;
+        decline = true;
         return;
       }
 

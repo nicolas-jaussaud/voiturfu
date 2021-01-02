@@ -7,6 +7,7 @@ window.onload = () => {
 
   // Start audio
   d.getElementById('audio').play()
+  
   // Loader until we download all the assets
   const loadingContent = d.getElementById('loading')
 
