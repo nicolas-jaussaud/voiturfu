@@ -7,6 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="./assets/css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/87/three.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="./assets/lib/OBJLoader.js"></script>
     <script src="./assets/lib/MTLLoader.js"></script>
     <script src="./models/Car.js"></script>
@@ -14,12 +15,20 @@
     <script src="./utils/index.js"></script>
     <script src="./index.js"></script>
 	</head>
-	<body id="body">
+	<body id="body" class="back-row-toggle splat-toggle">
+    <div class="rain front-row"></div>
+    <div class="rain back-row"></div>
     <div id="loading">
       <div class="content">
         <h1>Voiturfu</h1>
         <i>Game is loading</i>
       </div>
     </div>
+    <div class="audio" style="position: absolute;">
+      <audio id="audio" loop controls>
+        <source src="./assets/audio/sound.mp3" type="audio/mp3">
+      </audio>
+    </div>
 	</body>
 </html>
+

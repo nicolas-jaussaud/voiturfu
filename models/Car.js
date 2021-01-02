@@ -5,18 +5,24 @@ class Car {
 	 * 
 	 * @param  {object} object 
 	 */
-	constructor(object) {
+	constructor(object, scene) {
 
 	  this.object = object
+    this.scene = scene
+
+    this.speed = 3
+    
+    // Right scale for the object
+    this.object.scale.set(0.04, 0.04, 0.04)
 
 	  // Initial position of the object
-	  this.object.rotation.x = Math.PI / 2
-    this.object.rotation.y = Math.PI
+	  // this.object.rotation.x = Math.PI / 2
+    this.object.rotation.y = Math.PI / 2
 		
-    this.speed = 3
+
     this.currentPosition = 'center'
 		this.lateralSpeed = 1 * this.speed
-		this.rotateSpeed = 0.01 * this.speed
+		this.rotateSpeed = 0.005 * this.speed
 
 		// Bind all functions for avoiding scope issues
 		this.controls           = this.controls.bind(this)
@@ -29,7 +35,9 @@ class Car {
 		
 		// Add listeners for the user inputs
 		this.controls()
-	}
+	 
+    this.initWheels()
+  }
 
 
 	/**
@@ -81,8 +89,8 @@ class Car {
         this.object.position.x - this.lateralSpeed;
 		}
 
-		if(this.object.rotation.y !== Math.PI) {
-			this.object.rotation.y = this.object.rotation.y < Math.PI ?
+		if(this.object.rotation.y !== Math.PI / 2) {
+			this.object.rotation.y = this.object.rotation.y < Math.PI / 2 ?
         this.object.rotation.y + this.rotateSpeed :
         this.object.rotation.y - this.rotateSpeed;
 		}
@@ -95,7 +103,7 @@ class Car {
    * True if on the initial position
    */
   isInitialPosition() {
-    return this.object.position.x === 0 && this.object.rotation.y === Math.PI;
+    return this.object.position.x === 0 && this.object.rotation.y === Math.PI / 2;
   }
 
 
@@ -141,4 +149,41 @@ class Car {
 
     setTimeout(() => this.goRight(), 5)
 	}
+
+
+  initWheels() {
+    
+    for (let i = 1; i < 5; i++) {      
+      // setTimeout(() => this.rotateWheel(this.object.children[i], true), 5)
+      //this.object.children[i].rotation.x = Math.PI / 2
+    }
+
+  }
+
+
+  /**
+   * Rotate wheels of the object
+   */
+  rotateWheel(wheel, increase) {
+
+    if(wheel.rotation.z > 0.01 || wheel.rotation.z < -0.01) {
+       wheel.rotation.z = increase ? 0.009 : -0.009
+      console.log('stop')
+      setTimeout(() => this.rotateWheel(wheel, !increase), 15)
+      return;
+    }
+
+    if(increase === true) {
+      console.log('true')
+      wheel.rotation.z += 0.01
+      wheel.position.x -= 0.1
+      setTimeout(() => this.rotateWheel(wheel, increase), 15)
+    }
+    else if(increase === false) {
+      console.log('false')
+      wheel.rotation.z -= 0.01;
+      wheel.position.x += 0.1
+      setTimeout(() => this.rotateWheel(wheel, increase), 15)
+    }    
+  }
 }

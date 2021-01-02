@@ -3,6 +3,7 @@ body {
   overflow: hidden;
   opacity: 0.8;
   background-color: darkviolet;
+  position: relative;
 }
 
 canvas { 
@@ -35,4 +36,77 @@ canvas {
   font-family: 'Press Start 2P', cursive;
 }
 
+/**
+ * @see https://www.youtube.com/watch?v=llWMlHrTwqQ&feature=youtu.be
+ */
+body::after,
+body::before {
+  content: '';
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100vw;
+  height: 100vh;
+  background-image: url(../img/rain.png);
+  background-size: 50%;
+  background-position: center;
+  filter: opacity(0.5);
+  animation: rainAnimation 1s infinite;
+  -webkit-animation: rainAnimation 0.6s infinite;
+  -moz-animation: rainAnimation 1s infinite;
+  -o-animation: rainAnimation 0.6s infinite;
+}
 
+body::after {
+  background-size: 25%;
+  filter: opacity(0.4);
+  animation: rainAnimation2 0.3s infinite;
+  -webkit-animation: rainAnimation2 0.3s infinite;
+  -moz-animation: rainAnimation2 0.3s infinite;
+  -o-animation: rainAnimation2 0.3s infinite;
+}
+
+@-webkit-keyframes rainAnimation {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@-moz-keyframes rainAnimation {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@-o-keyframes rainAnimation {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@keyframes rainAnimation {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0px 800%;
+  }
+}
+
+@keyframes rainAnimation2 {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 64px 800%;
+  }
+}

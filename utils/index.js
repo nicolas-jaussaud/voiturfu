@@ -6,15 +6,15 @@ const loadCar = async (scene) => {
   let mtlLoader = new THREE.MTLLoader();
   mtlLoader.setTexturePath('./textures/');
   mtlLoader.setPath('./textures/');
-  mtlLoader.load('CyberpunkDeLorean.mtl', (materials) => {
+  mtlLoader.load('Low_Poly_Sportcar.mtl', (materials) => {
 
     materials.preload();
     let objLoader = new THREE.OBJLoader();
     
     objLoader.setMaterials(materials);
     objLoader.setPath('./objects//');
-    objLoader.load('CyberpunkDeLorean.obj', (object) => {
-      car = new Car(object)
+    objLoader.load('Low_Poly_Sportcar.obj', (object) => {
+      car = new Car(object, scene)
       scene.add(object)
       isLoading = false
     })
@@ -29,14 +29,15 @@ const loadCar = async (scene) => {
 const lights = (scene) => {
 
   let backLight = new THREE.DirectionalLight(0xffffff, 1.0)
-  backLight.position.set(100, 0, -100).normalize()
+  backLight.position.set(100, 20, 100).normalize()
   
-  let ambientLight = new THREE.AmbientLight('rgb(50, 50, 150)', 5)
+  let ambientLight = new THREE.AmbientLight('rgb(50, 50, 150)', 1)
   
-  let sideLight = new THREE.DirectionalLight('rgb(50, 50, 150)', 5);
-  sideLight.position.set(0, 0, 500).normalize()
+  let sideLight = new THREE.DirectionalLight('rgb(50, 50, 150)', 10)
+  sideLight.position.set(800, 800, 100).normalize()
+  sideLight.rotation.x = 0
   
-  scene.add(sideLight);
-  scene.add(backLight);
-  scene.add(ambientLight);
+  scene.add(sideLight)
+  scene.add(backLight)
+  scene.add(ambientLight)
 }
