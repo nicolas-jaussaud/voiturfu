@@ -41,3 +41,14 @@ const lights = (scene) => {
   scene.add(backLight)
   scene.add(ambientLight)
 }
+
+
+/**
+ * Handle sound with SoundCloud iframe
+ */
+const initRadio = () => {
+  
+  // Start audio init animation
+  document.getElementById('audio').setAttribute('class', 'audio init')
+  setTimeout(() => document.getElementById('audio').setAttribute('class', 'audio'), 5000)
+}

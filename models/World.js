@@ -78,7 +78,10 @@ class World {
     setInterval(() => this.animateObstacle(), 10)
 
     // Thunder every 6 seconds
-    setInterval(() => this.thunder(), 6000)
+    this.thunder()
+    setInterval(() => this.thunder(), 10000)
+    
+    this.rain()
   }
 
 
@@ -193,9 +196,16 @@ class World {
     thunderLight.intensity = 0
     this.scene.add(thunderLight)
     
+    // Random thunder sound with a little delay
+    setTimeout(() => {
+      const sound = new Audio('./assets/audio/sound' + Math.floor(Math.random() * Math.floor(3)) + '.mp3');
+      sound.play()
+    }, 400);
+
     let decline = false
     const interval = setInterval(() => {
-        
+      
+
       thunderLight.intensity = decline === false ? 
         thunderLight.intensity + 50 :
         thunderLight.intensity - 50
@@ -211,12 +221,25 @@ class World {
       }
 
       if(decline === true && thunderLight.intensity < 0) {
+
         thunderLight.intensity = 0
         this.scene.background = null
         clearInterval(interval)
       }
     }, 10)
 
+  }
+
+  rain() {
+    const sound = new Audio('./assets/audio/rain.mp3');
+    
+    // loop
+    sound.addEventListener('ended', () => {
+      this.currentTime = 0;
+      this.play();
+    }, false);
+
+    sound.play()
   }
   
 }

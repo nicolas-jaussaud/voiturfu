@@ -37,6 +37,28 @@ canvas {
 }
 
 /**
+ * Audio
+ */
+.audio {
+  position: absolute;
+  top: 10;
+  left: 10;
+  z-index: 99999999999999999999999999999999999999999999;
+  transition: ease 0.3s;
+}
+
+.audio iframe {
+  height: 20px;
+  transition: ease 0.3s;
+}
+
+.audio.init iframe,
+.audio:hover iframe {
+  height: 300px;
+  transition: ease 0.3s;
+}
+
+/**
  * @see https://www.youtube.com/watch?v=llWMlHrTwqQ&feature=youtu.be
  */
 body::after,

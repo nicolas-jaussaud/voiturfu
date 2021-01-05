@@ -4,9 +4,6 @@ var isLoading = true
 window.onload = () => {
 
   const d = document
-
-  // Start audio
-  d.getElementById('audio').play()
   
   // Loader until we download all the assets
   const loadingContent = d.getElementById('loading')
@@ -41,9 +38,18 @@ window.onload = () => {
   animate()
 
   // Remove when everything is loaded
-  const loading = () => isLoading === false ? 
-    loadingContent.setAttribute('style','display:none') : 
-    setTimeout(() => loading(), 200); 
-  
+  const loading = () => {
+    
+    if(isLoading === false) {
+      
+      // Soundcloud
+      initRadio()
+      
+      loadingContent.setAttribute('style','display:none') 
+      return;
+    } 
+
+    setTimeout(() => loading(), 200)
+  }
   loading()
 }
