@@ -7,6 +7,10 @@ class World {
    */
   constructor(scene) {
 
+    // @see utils/lights
+    loadCar(scene)
+    lights(scene)
+
     this.scene = scene
 
     // All the building colors
@@ -75,7 +79,10 @@ class World {
 
     // Move the decor and make it loopable
     setInterval(() => this.animateLandscape(), 10)
-    setInterval(() => this.animateObstacle(), 10)
+
+    setTimeout(() => {
+      setInterval(() => this.animateObstacle(), 10)
+    }, 8000)
 
     // Thunder every 6 seconds
     this.thunder()
@@ -159,6 +166,29 @@ class World {
 
   animateObstacle() {
     
+    if(this.currentObstacle.position.z > -50) {
+
+      let position = 'center'
+      if(window.car.position.x < -14) {
+        position = 'left'
+      }
+      else if(window.car.position.x > 14) {
+        position = 'right'
+      }
+
+      switch(this.currentObstacle.position.x) {
+        case -50:
+          if(position === 'left') window.die()
+          break;
+        case 0:
+          if(position === 'center') window.die()
+          break;
+        case 50:
+          if(position === 'right') window.die()
+          break;
+      }
+    }
+
     if(this.currentObstacle.position.z < 200) {
       this.currentObstacle.position.z = this.currentObstacle.position.z + 80
       return;

@@ -1,22 +1,26 @@
 /**
  * Load the car in the scene
  */
-const loadCar = async (scene) => {
+const loadCar = (scene) => {
   
-  let mtlLoader = new THREE.MTLLoader();
-  mtlLoader.setTexturePath('./textures/');
-  mtlLoader.setPath('./textures/');
+  let mtlLoader = new THREE.MTLLoader()
+
+  mtlLoader.setTexturePath('./textures/')
+  mtlLoader.setPath('./textures/')
   mtlLoader.load('Low_Poly_Sportcar.mtl', (materials) => {
 
-    materials.preload();
-    let objLoader = new THREE.OBJLoader();
+    materials.preload()
+    let objLoader = new THREE.OBJLoader()
     
-    objLoader.setMaterials(materials);
-    objLoader.setPath('./objects//');
+    objLoader.setMaterials(materials)
+    objLoader.setPath('./objects//')
     objLoader.load('Low_Poly_Sportcar.obj', (object) => {
+      
       car = new Car(object, scene)
       scene.add(object)
       isLoading = false
+      
+      window.car = object
     })
 
   })
