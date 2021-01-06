@@ -82,7 +82,7 @@ class World {
 
     setTimeout(() => {
       setInterval(() => this.animateObstacle(), 10)
-    }, 8000)
+    }, 10000)
 
     // Thunder every 6 seconds
     this.thunder()
@@ -190,7 +190,7 @@ class World {
     }
 
     if(this.currentObstacle.position.z < 200) {
-      this.currentObstacle.position.z = this.currentObstacle.position.z + 80
+      this.currentObstacle.position.z = this.currentObstacle.position.z + 120
       return;
     }
     
