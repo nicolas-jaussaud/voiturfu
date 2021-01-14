@@ -58,7 +58,6 @@ class World {
     
     const init = setInterval(() => {
 
-      console.log(isLoading)
       if(isLoading) return;
       
       this.createObstacle()
