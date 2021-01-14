@@ -255,10 +255,8 @@ class World {
         thunderLight.intensity + 50 :
         thunderLight.intensity - 50
       
-      const color = thunderLight.intensity / 500
-      this.scene.background = new THREE.Color(
-        'rgb(' + thunderLight.intensity + '%, ' + thunderLight.intensity + '%, ' + thunderLight.intensity + '%)'
-      )
+      const color = thunderLight.intensity <= 0 ? 0 : thunderLight.intensity
+      this.scene.background = new THREE.Color(`rgb(${color}%, ${color}%, ${color}%)`)
       
       if(thunderLight.intensity > 500) {
         decline = true;
@@ -266,7 +264,6 @@ class World {
       }
 
       if(decline === true && thunderLight.intensity < 0) {
-        
         thunderLight.intensity = 0
         this.scene.background = null
         clearInterval(interval)
