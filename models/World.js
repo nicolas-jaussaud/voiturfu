@@ -143,7 +143,6 @@ class World {
     this.scene.add( mesh )
   }
 
-
   createObstacle() {
 
     let geometry = new THREE.CubeGeometry( 50, 50, 50 )
@@ -158,15 +157,32 @@ class World {
     mesh.castShadow = true
     mesh.receiveShadow = true
 
-    this.scene.remove( this.currentObstacle );
-    this.currentObstacle = mesh 
+    if(this.currentObstacle) {
+
+      this.scene.remove( this.currentObstacle.object );
+      
+      /**
+       * Needed for completly remove obstacle, it causes performance issue otherwise
+       * 
+       * @see https://stackoverflow.com/a/37009330
+       */
+      this.currentObstacle.geometry.dispose();
+      this.currentObstacle.material.dispose();
+    }
+
+    this.currentObstacle = {
+      object: mesh,
+      geometry: geometry,
+      material: material
+    }
+
     this.scene.add( mesh )
   }
 
 
   animateObstacle() {
     
-    if(this.currentObstacle.position.z > -50) {
+    if(this.currentObstacle.object.position.z > -50) {
 
       let position = 'center'
       if(window.car.position.x < -14) {
@@ -176,7 +192,7 @@ class World {
         position = 'right'
       }
 
-      switch(this.currentObstacle.position.x) {
+      switch(this.currentObstacle.object.position.x) {
         case -50:
           if(position === 'left') window.die()
           break;
@@ -189,8 +205,8 @@ class World {
       }
     }
 
-    if(this.currentObstacle.position.z < 200) {
-      this.currentObstacle.position.z = this.currentObstacle.position.z + 80
+    if(this.currentObstacle.object.position.z < 200) {
+      this.currentObstacle.object.position.z = this.currentObstacle.object.position.z + 80
       return;
     }
     
@@ -234,7 +250,6 @@ class World {
 
     let decline = false
     const interval = setInterval(() => {
-      
 
       thunderLight.intensity = decline === false ? 
         thunderLight.intensity + 50 :
@@ -251,7 +266,7 @@ class World {
       }
 
       if(decline === true && thunderLight.intensity < 0) {
-
+        
         thunderLight.intensity = 0
         this.scene.background = null
         clearInterval(interval)
