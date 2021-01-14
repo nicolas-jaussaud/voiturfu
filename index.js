@@ -1,6 +1,9 @@
 // Need to be out of scope
 var isLoading = true
 
+window.car = false
+window.obstacle = false
+
 window.onload = () => {
 
   const d = document

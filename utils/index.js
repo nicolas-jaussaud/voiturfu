@@ -18,9 +18,41 @@ const loadCar = (scene) => {
       
       car = new Car(object, scene)
       scene.add(object)
-      isLoading = false
-      
+      if(window.obstacle) isLoading = false
+
       window.car = object
+    })
+
+  })
+}
+
+
+/**
+ * Load the obstacle car in the scene
+ */
+const loadObstacle = (scene) => {
+  
+  let mtlLoader = new THREE.MTLLoader()
+
+  mtlLoader.setTexturePath('./textures/')
+  mtlLoader.setPath('./textures/')
+  mtlLoader.load('FutureCar.mtl', (materials) => {
+
+    materials.preload()
+    let objLoader = new THREE.OBJLoader()
+    
+    objLoader.setMaterials(materials)
+    objLoader.setPath('./objects//')
+    objLoader.load('FutureCar.obj', (object) => {
+
+      scene.add(object)
+      if(window.car) isLoading = false
+
+      object.scale.set(25, 25, 25)
+      object.rotation.y = Math.PI / 2
+      object.position.y = -20
+
+      window.obstacle = object
     })
 
   })

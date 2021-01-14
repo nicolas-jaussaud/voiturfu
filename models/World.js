@@ -9,6 +9,7 @@ class World {
 
     // @see utils/lights
     loadCar(scene)
+    loadObstacle(scene)
     lights(scene)
 
     this.scene = scene
@@ -55,9 +56,18 @@ class World {
     this.thunder          = this.thunder.bind(this)
     this.getThunderLight  = this.getThunderLight.bind(this)
     
-    this.createObstacle()
-    this.createFloor()
-    this.createLandscape()
+    const init = setInterval(() => {
+
+      console.log(isLoading)
+      if(isLoading) return;
+      
+      this.createObstacle()
+      this.createFloor()
+      this.createLandscape()
+      
+      clearInterval(init)
+    }, 100)
+    
   }
 
 
@@ -125,7 +135,6 @@ class World {
     this.buildings.push( mesh )
   }
 
-
   createFloor() {
 
     let geometry = new THREE.CubeGeometry( 150, 0, 8000 )
@@ -145,44 +154,17 @@ class World {
 
   createObstacle() {
 
-    let geometry = new THREE.CubeGeometry( 50, 50, 50 )
-    let material = new THREE.MeshStandardMaterial({ color: 0x444444 })
-    let mesh = new THREE.Mesh( geometry, material )
-    
-    mesh.position.y = -20
-    mesh.position.x = this.getRandomSide()
-    mesh.position.z = -3000
-    
-    mesh.shading = THREE.FlatShading
-    mesh.castShadow = true
-    mesh.receiveShadow = true
+    if(!window.obstacle) return;
 
-    if(this.currentObstacle) {
-
-      this.scene.remove( this.currentObstacle.object );
-      
-      /**
-       * Needed for completly remove obstacle, it causes performance issue otherwise
-       * 
-       * @see https://stackoverflow.com/a/37009330
-       */
-      this.currentObstacle.geometry.dispose();
-      this.currentObstacle.material.dispose();
-    }
-
-    this.currentObstacle = {
-      object: mesh,
-      geometry: geometry,
-      material: material
-    }
-
-    this.scene.add( mesh )
+    window.obstacle.position.y = -20
+    window.obstacle.position.x = this.getRandomSide()
+    window.obstacle.position.z = -3000
   }
 
 
   animateObstacle() {
-    
-    if(this.currentObstacle.object.position.z > -50) {
+
+    if(window.obstacle.position.z > -50) {
 
       let position = 'center'
       if(window.car.position.x < -14) {
@@ -192,7 +174,7 @@ class World {
         position = 'right'
       }
 
-      switch(this.currentObstacle.object.position.x) {
+      switch(window.obstacle.position.x) {
         case -50:
           if(position === 'left') window.die()
           break;
@@ -205,8 +187,8 @@ class World {
       }
     }
 
-    if(this.currentObstacle.object.position.z < 200) {
-      this.currentObstacle.object.position.z = this.currentObstacle.object.position.z + 80
+    if(window.obstacle.position.z < 200) {
+      window.obstacle.position.z = window.obstacle.position.z + 80
       return;
     }
     
