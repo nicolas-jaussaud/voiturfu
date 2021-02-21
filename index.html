@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="./assets/lib/OBJLoader.js"></script>
     <script src="./assets/lib/MTLLoader.js"></script>
+    <script src="./models/Game.js"></script>
     <script src="./models/Car.js"></script>
     <script src="./models/World.js"></script>
     <script src="./utils/index.js"></script>
@@ -19,7 +20,8 @@
     <div id="loading">
       <div class="content">
         <h1>Voiturfu</h1>
-        <i>Game is loading</i>
+        <i id="loading-message">Game is loading</i>
+        <button id="start" style="display: none">Start</button>
       </div>
     </div>
     <div id="die" style="display: none">

@@ -4,7 +4,7 @@
 
 Three.js game with cars, in the turfu.
 
-Can be tested here: https://voiturfu.jaussaud-nicolas.fr (Work in progress, not working yet)
+Can be tested here: https://voiturfu.nicolasjaussaud.me (Work in progress, not working yet)
 
 ## Ressources
 

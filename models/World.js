@@ -5,7 +5,7 @@ class World {
    * 
    * @param  {scene} object 
    */
-  constructor(scene) {
+  constructor(scene, game) {
 
     // @see utils/lights
     loadCar(scene)
@@ -13,6 +13,7 @@ class World {
     lights(scene)
 
     this.scene = scene
+    this.game = game
 
     // All the building colors
     this.buildings = []
@@ -55,20 +56,55 @@ class World {
     this.getRandomSide    = this.getRandomSide.bind(this)
     this.thunder          = this.thunder.bind(this)
     this.getThunderLight  = this.getThunderLight.bind(this)
-    
-    const init = setInterval(() => {
+    this.rain             = this.rain.bind(this)
 
-      if(isLoading) return;
+    this.createFloor()
+
+    const init = setInterval(() => {
       
-      this.createObstacle()
-      this.createFloor()
       this.createLandscape()
       
       clearInterval(init)
     }, 100)
-    
   }
 
+  /**
+   * Called when user press play button
+   */
+  start() {
+
+    // Not sure why but it called multiple time
+    if(this.isStarted) return;
+    this.isStarted = true
+
+    // Rain and thunder
+    this.initSound()
+
+    this.obstacleInterval = setInterval(() => {      
+      
+      this.createObstacle()
+      this.startObstacles()
+
+      clearInterval(this.obstacleInterval)
+    }, 100)
+
+  }
+
+  /**
+   * Start adding obstacle
+   */
+  startObstacles() {
+    setTimeout(() => {
+      this.obstaclesInterval = setInterval(() => this.animateObstacle(), 10)
+    }, 8000)
+  }
+
+  /**
+   * Stop adding obstacle
+   */
+  stopObstacles() {
+    clearInterval(this.obstaclesInterval)
+  }
 
   /**
    * Generate the building on the side 
@@ -88,18 +124,19 @@ class World {
 
     // Move the decor and make it loopable
     setInterval(() => this.animateLandscape(), 10)
+  }
 
-    setTimeout(() => {
-      setInterval(() => this.animateObstacle(), 10)
-    }, 8000)
+  /**
+   * Start sound (needs to be after user interaction otherwiser could be blocked by brower)
+   */
+  initSound() {
 
     // Thunder every 6 seconds
     this.thunder()
     setInterval(() => this.thunder(), 10000)
-    
+
     this.rain()
   }
-
 
   /**
    * Animate the landscape
@@ -163,6 +200,8 @@ class World {
 
   animateObstacle() {
 
+    if(!this.isStarted) return;
+
     if(window.obstacle.position.z > -50) {
 
       let position = 'center'
@@ -175,13 +214,13 @@ class World {
 
       switch(window.obstacle.position.x) {
         case -50:
-          if(position === 'left') window.die()
+          if(position === 'left') this.game.die()
           break;
         case 0:
-          if(position === 'center') window.die()
+          if(position === 'center') this.game.die()
           break;
         case 50:
-          if(position === 'right') window.die()
+          if(position === 'right') this.game.die()
           break;
       }
     }
@@ -225,7 +264,8 @@ class World {
     
     // Random thunder sound with a little delay
     setTimeout(() => {
-      const sound = new Audio('./assets/audio/sound' + Math.floor(Math.random() * Math.floor(3)) + '.mp3');
+      const sound = new Audio('./assets/audio/sound' + Math.floor(Math.random() * Math.floor(3)) + '.mp3')
+      sound.volume = 1
       sound.play()
     }, 400);
 
