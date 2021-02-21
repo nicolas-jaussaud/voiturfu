@@ -24,6 +24,21 @@ canvas {
   z-index: 999;
 }
 
+#countdown {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 120;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
 button {
   padding: 20px 40px;
   font-family: 'Press Start 2P', cursive;

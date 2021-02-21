@@ -16,6 +16,7 @@ class Game {
     this.loadingText    = document.getElementById('loading-message')
     this.startButton    = document.getElementById('start')
     this.restartButton  = document.getElementById('restart')
+    this.countdownDiv   = document.getElementById('countdown')
     
     this.status = 'stopped'
     
@@ -54,8 +55,11 @@ class Game {
    */
   start() {
 
+    if(this.status === 'play') return;
+
     // Start counting points
     this.status = 'play'
+    this.startCountdown()
 
     this.world.start()
 
@@ -70,10 +74,13 @@ class Game {
    */
   restart() {
 
+    if(this.status === 'play') return;
+    
     this.deathScreen.setAttribute('style','display: none')
     
     this.setScore(0)
 
+    this.startCountdown()
     this.status = 'play'
 
     this.world.createObstacle()
@@ -100,5 +107,28 @@ class Game {
   setScore(score) {
     this.score = score
     this.scoreDiv.textContent = score 
+  }
+
+  /**
+   * Countdown before starting new game
+   */
+  startCountdown() {
+    
+    this.countdown = 6
+    this.countdownDiv.textContent = this.countdown
+
+    this.countdownInterval = setInterval(() => {
+
+      if(this.countdown <= 0) {
+        this.countdownDiv.setAttribute('style', 'display: none')
+        clearInterval(this.countdownInterval)
+        return;
+      }
+
+      this.countdownDiv.textContent = this.countdown
+      this.countdown = this.countdown - 1
+      this.countdownDiv.setAttribute('style', '')
+    }, 1000)
+
   }
 }

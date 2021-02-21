@@ -8,7 +8,7 @@ window.onload = () => {
 
   const d = document
 
-  let scene = new THREE.Scene();
+  let scene = new THREE.Scene()
 
   let camera = new THREE.PerspectiveCamera( 70, window.innerWidth/window.innerHeight, 0.1, 8000 )
   camera.position.z = 50
@@ -17,7 +17,7 @@ window.onload = () => {
 
   let renderer = new THREE.WebGLRenderer()
   renderer.setSize( window.innerWidth, window.innerHeight )
-  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.enabled = true
   
   d.body.appendChild( renderer.domElement )
   
