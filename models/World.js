@@ -202,7 +202,7 @@ class World {
 
     if(!this.isStarted) return;
 
-    if(window.obstacle.position.z > -50) {
+    if(window.obstacle.position.z > -100) {
 
       let position = 'center'
       if(window.car.position.x < -14) {
@@ -226,7 +226,7 @@ class World {
     }
 
     if(window.obstacle.position.z < 200) {
-      window.obstacle.position.z = window.obstacle.position.z + 80
+      window.obstacle.position.z = window.obstacle.position.z + 65
       return;
     }
     

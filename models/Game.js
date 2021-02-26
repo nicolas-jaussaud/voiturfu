@@ -47,7 +47,7 @@ class Game {
    * Called at every frame by three js, handle game events
    */
   events() {
-    if(this.status !== 'stopped') this.incrementScore()
+    if(this.status !== 'stopped' && this.status !== 'countdown') this.incrementScore()
   }
 
   /**
@@ -55,10 +55,10 @@ class Game {
    */
   start() {
 
-    if(this.status === 'play') return;
+    if(this.status === 'play' || this.status === 'countdown') return;
 
     // Start counting points
-    this.status = 'play'
+    this.status = 'countdown'
     this.startCountdown()
 
     this.world.start()
@@ -74,14 +74,14 @@ class Game {
    */
   restart() {
 
-    if(this.status === 'play') return;
+    if(this.status === 'play' || this.status === 'countdown') return;
     
     this.deathScreen.setAttribute('style','display: none')
     
     this.setScore(0)
 
+    this.status = 'countdown'
     this.startCountdown()
-    this.status = 'play'
 
     this.world.createObstacle()
     this.world.startObstacles()
@@ -101,6 +101,7 @@ class Game {
    * Score +1
    */
   incrementScore() {
+    if (this.status === 'countdown') return;
     this.setScore(this.score + 1)
   }
 
@@ -120,6 +121,8 @@ class Game {
     this.countdownInterval = setInterval(() => {
 
       if(this.countdown <= 0) {
+        this.status = 'play'
+
         this.countdownDiv.setAttribute('style', 'display: none')
         clearInterval(this.countdownInterval)
         return;
